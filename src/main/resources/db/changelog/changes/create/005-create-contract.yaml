@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_contact_table
+      author: "sk Nayan"
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: contact
+      changes:
+        - createTable:
+            tableName: contact
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: contact_pkey
+              - column:
+                  name: phone_no
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: supplier_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: supplier_contact_fk
+                    references: supplier(id)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
